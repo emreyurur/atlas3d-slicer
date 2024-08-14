@@ -1,0 +1,275 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+@font-face {
+  font-family: "SF Mono";
+  src: url("../fonts/SFMonoMedium.otf") format("truetype");
+  font-weight: medium;
+  font-style: normal;
+}
+
+* {
+  font-family: "Inter";
+}
+
+.swap-input::after {
+  content: none !important;
+}
+
+.swap-input::before {
+  content: none !important;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgb(230, 59, 31);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(230, 59, 31);
+}
+
+body {
+  margin: 0;
+}
+
+.css-reij49-MuiInputBase-root-MuiFilledInput-root::before {
+  border-bottom: none !important;
+}
+
+.sidebar_arrow {
+  position: absolute;
+  top: 160px;
+  right: 80px;
+  z-index: 100;
+  cursor: pointer;
+}
+
+.sidebar_back {
+  position: absolute;
+  top: 0px;
+  right: 400px;
+  bottom: 0px;
+  height: 100%;
+  width: 115px;
+  border-radius: 30px 0px 0px 30px;
+  z-index: 0;
+}
+
+.sidebar_back:hover {
+  background-color: #2d2d2d;
+  height: 100%;
+  cursor: pointer;
+}
+
+.sidebar_back:hover .sidebar_arrow {
+  animation: slideInFromLeft 0.8s;
+}
+
+
+@keyframes slideInFromLeft {
+  0% {
+    transform: translateX(0px);
+  }
+  100% {
+    transform: translateX(10px);
+  }
+}
+
+
+
+.notify {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.notify.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.notify.visible {
+  max-height: 170px;
+  opacity: 1;
+}
+
+.content {
+  width: 100%;
+  height: 178px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.content.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.content.visible {
+  max-height: 178px;
+  opacity: 1;
+}
+
+.withdrawcontent {
+  width: 100%;
+  height: 260px;
+  overflow: hidden;
+  transition: max-height 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.withdrawcontent.hidden {
+  max-height: 0;
+  opacity: 0;
+}
+
+.withdrawcontent.visible {
+  max-height: 260px;
+  opacity: 1;
+}
+
+.sidebarcontent {
+  flex: 1;
+  transition: margin-right 0.5s ease-out;
+  width: 100%;
+}
+
+.sidebarcontent.shifted {
+  margin-right: 250px;
+}
+
+.website_hero {
+  background-image: url("../images/website/heroback.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.ownership_section {
+  background-image: url("../images/website/ownershipback.png");
+  background-size: cover;
+}
+.footer_back {
+  background-image: url("../images/website/footerback.png");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+.traditional_back::before {
+  content: url("../images/website/traditional_back.png");
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.sidebar
+{
+  display: none;
+}
+
+@media screen and (max-width: 1200px) {
+ /* website sidebar  */
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  color: #2d2d2d;
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
+  display: block;
+}
+
+.sidebar.open {
+  transform: translateX(0);
+}
+}
+@media screen and (max-width: 500px) {
+  .sidebarcontent.shifted {
+    margin-right: 0px;
+  }
+  .traditional_back::before {
+    content: url("../images/website/mobile_traditional_back.png");
+    position: absolute;
+    top: 5%;
+    transform: translateY(-5%);
+  }
+  .website_hero {
+    background-image: url("../images/website/mobile_hero_back.png");
+  }
+  .footer_back {
+    background-image: url("../images/website/mobile_footer_back.png");
+    background-repeat: no-repeat;
+    background-position: bottom;
+  }
+}
+
+@media screen and (max-width: 390px) {
+  .bell_notification {
+    max-width: 350px !important;
+    min-width: 350px !important;
+    right: 10px !important;
+  }
+  .bell_inner_section {
+    max-width: 350px !important;
+    min-width: 350px !important;
+  }
+}
+
+@media screen and (max-width: 376px) {
+  .bell_notification {
+    max-width: 340px !important;
+    min-width: 340px !important;
+    right: 5px !important;
+  }
+  .bell_inner_section {
+    max-width: 340px !important;
+    min-width: 340px !important;
+  }
+}
+
+@media screen and (max-width: 365px) {
+  .bell_notification {
+    max-width: 330px !important;
+    min-width: 330px !important;
+    right: 5px !important;
+  }
+  .bell_inner_section {
+    max-width: 330px !important;
+    min-width: 330px !important;
+  }
+}
+
+/* Add the following styles to handle the username collapsing properly */
+.username-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.username {
+  flex-grow: 1;
+  flex-shrink: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+}
