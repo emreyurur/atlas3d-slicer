@@ -35,7 +35,7 @@ function InvestSection() {
                 textAlign : {xs: 'center' , lg: 'start'}
               }}
             >
-              Invest in the Real World, On Chain
+              Token Spending Tracking
             </Typography>
             <Typography
               sx={{
@@ -49,9 +49,7 @@ function InvestSection() {
                 textAlign : {xs: 'center' , lg: 'start'}
               }}
             >
-              Diversify your portfolio with a new class of assets. Our platform
-              allows you to invest in tangible assets, tokenized and secured on
-              a blockchain.
+              It allows developers to track and analyze in detail the token spending of users using the platform.
             </Typography>
         <Box sx={{ display : 'flex' , justifyContent : {xs: 'center' , lg: 'start'}}}>
             <Button

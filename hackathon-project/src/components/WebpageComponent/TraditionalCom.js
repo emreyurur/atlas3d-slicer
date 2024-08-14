@@ -24,7 +24,7 @@ function TraditionalCom() {
                   lineHeight: {xs: '44px' , lg: "87px"},
                 }}
               >
-                Bridge the Gap Between Traditional and Digital Assets
+                Blockchain Based Certification
               </Typography>
               <Typography
                 sx={{
@@ -37,11 +37,7 @@ function TraditionalCom() {
                   margin: "auto",
                 }}
               >
-                Povego is more than just a marketplace. It's a gateway to a
-                world of opportunities, allowing you to invest in tangible
-                assets that align with your values. Our blockchain-powered
-                platform ensures security, transparency, and ease of use, making
-                it simple to build a diversified portfolio.
+               In compliance with the EU Artificial Intelligence Law, it securely records and stores data input into AI models and outputs from those models.
               </Typography>
               <Button
                 sx={{

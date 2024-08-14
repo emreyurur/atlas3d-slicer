@@ -1,7 +1,6 @@
 import { Box, Button, Container, Typography } from "@mui/material";
 import React from "react";
 import arrow from "../../assets/images/website/launcharrow.png";
-import owner from "../../assets/images/website/ownership.png";
 import { useNavigate } from "react-router-dom";
 
 function OwnershipSection() {
@@ -34,7 +33,7 @@ function OwnershipSection() {
                   textAlign: { xs: 'center', lg: 'start' }
                 }}
               >
-                Digital ownership of physical assets
+                Blockchain Based Certification
               </Typography>
               <Typography
                 sx={{
@@ -46,10 +45,7 @@ function OwnershipSection() {
                   textAlign: { xs: 'center', lg: 'start' }
                 }}
               >
-                Own a piece of the tangible world, securely and transparently,
-                on a blockchain. Fractionalize ownership of real-world assets.
-                Start exploring our marketplace today and discover a new way to
-                invest.
+                In compliance with the EU Artificial Intelligence Law, it securely records and stores data input into AI models and outputs from those models.
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: { xs: 'center', lg: 'start' } }}>
                 <Button
@@ -81,7 +77,6 @@ function OwnershipSection() {
               </Box>
             </Box>
             <Box sx={{ width: { xs: '100%', md: '45%' }, marginTop: { xs: '60px', lg: '0px' } }}>
-              <img src={owner} alt="owner" style={{ width: '100%' }}></img>
             </Box>
           </Box>
         </Container>
