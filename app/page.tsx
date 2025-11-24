@@ -3,7 +3,10 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-// CSS modül import satırını sildik!
+import Image from "next/image";
+import logo1 from "./assets/logo1.jpeg";
+import logo2 from "./assets/logo2.jpeg";
+import LoadingSpinner from "./components/LoadingSpinner";
 
 // İkonlar: npm install lucide-react
 import { Upload, Cpu, Settings, Triangle, Loader2 } from 'lucide-react';
@@ -25,6 +28,7 @@ export default function SlicerPage() {
   
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [progress, setProgress] = useState<string>("");
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -35,33 +39,36 @@ export default function SlicerPage() {
 
     setIsLoading(true);
     setError(null);
-
-    const formData = new FormData();
-    formData.append("file", file);
-    
-    // Makine Ayarları
-    formData.append("axis", axis);
-    formData.append("center", center);
-    formData.append("bedCenter", bedCenter);
-    formData.append("layerHeight", layerHeight);
-    formData.append("rotFixed", rotFixed);
-    formData.append("recenter", recenter ? "1" : "0");
-    
-    // Slicer Ayarları
-    formData.append("slicer", slicer);
-    formData.append("nozzleDiameter", nozzleDiameter);
+    setProgress("STL dosyası yükleniyor...");
 
     try {
-      const response = await fetch("/api/slice", {
+      // Harici API'ye query parametreleriyle istek at
+      const apiUrl = new URL("https://batuhantekin.icu/novus/slice-with-file");
+      apiUrl.searchParams.append("axis", axis);
+      apiUrl.searchParams.append("layer_height", layerHeight);
+      apiUrl.searchParams.append("nozzle_diameter", nozzleDiameter);
+      apiUrl.searchParams.append("fill_density", "0");
+      apiUrl.searchParams.append("rot_fixed", rotFixed);
+      apiUrl.searchParams.append("output", `${file.name.replace(/\.[^.]+$/, '')}.gcode`);
+      apiUrl.searchParams.append("verbose", "true");
+
+      // FormData'yı yeniden oluştur (sadece dosya)
+      const apiFormData = new FormData();
+      apiFormData.append("model_file", file);
+
+      setProgress("Slicing işlemi başlatılıyor...");
+      
+      const response = await fetch(apiUrl.toString(), {
         method: "POST",
-        body: formData,
+        body: apiFormData,
       });
 
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.error || "Sunucu hatası.");
+        const errorText = await response.text();
+        throw new Error(`API Hatası (${response.status}): ${errorText}`);
       }
 
+      setProgress("G-code indiriliyor...");
       const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -79,6 +86,7 @@ export default function SlicerPage() {
       setError(err.message);
     } finally {
       setIsLoading(false);
+      setProgress("");
     }
   };
 
@@ -86,11 +94,18 @@ export default function SlicerPage() {
   return (
     <>
       <main className="main">
+        {/* Sol üst logo */}
+        <div className="topLeftLogo">
+          <Image src={logo1} alt="Atlas 3D Logo" width={180} height={80} priority />
+        </div>
+
         <div className="panel">
           
           <div className="header">
-            <Cpu size={32} />
-            <h1>Slicer4RTN Kontrol Paneli</h1>
+            <Image src={logo2} alt="Logo" className="headerLogo" width={60} height={60} />
+            <div className="headerContent">
+              <h1>Novus Kontrol Paneli</h1>
+            </div>
           </div>
 
           <form onSubmit={handleSubmit} className="form">
@@ -257,12 +272,7 @@ export default function SlicerPage() {
                 </div>
               </div>
               
-              <div className="infoBox">
-                <span style={{ fontSize: '0.875rem', color: '#888' }}>
-                  ✅ Gerçek G-code üretimi aktif (Mandoline Slicer)<br/>
-                  Infill otomatik olarak 0 (boş) ayarlanacaktır.
-                </span>
-              </div>
+              
             </div>
 
             {error && (
@@ -274,6 +284,8 @@ export default function SlicerPage() {
               </div>
             )}
 
+            {isLoading && <LoadingSpinner progress={progress} />}
+
             <div className="buttonGroup">
               <button
                 type="submit"
@@ -283,10 +295,10 @@ export default function SlicerPage() {
                 {isLoading ? (
                   <>
                     <Loader2 size={20} className="loader" />
-                    Dilimleniyor...
+                    Slicing...
                   </>
                 ) : (
-                  "Dilimle ve G-code İndir"
+                  "Slice et ve G-code İndir"
                 )}
               </button>
             </div>
@@ -294,7 +306,6 @@ export default function SlicerPage() {
           </form>
         </div>
       </main>
-
       {/*
         TÜM CSS KODLARI BURADA
         <style jsx> etiketi, bu stillerin sadece bu bileşen için geçerli olmasını sağlar.
@@ -310,7 +321,22 @@ export default function SlicerPage() {
           color: #e0e0e0;
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
           padding: 1rem;
+          position: relative;
         }
+        
+        .topLeftLogo {
+          position: fixed;
+          top: 1.5rem;
+          left: 1.5rem;
+          z-index: 1000;
+        }
+        
+        .topLeftLogo img {
+          width: 180px;
+          height: auto;
+          filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+        }
+        
         .panel {
           width: 100%;
           max-width: 42rem;
@@ -331,6 +357,20 @@ export default function SlicerPage() {
           border-bottom: 1px solid #333;
           padding-bottom: 1rem;
         }
+        
+        .headerLogo {
+          width: 60px;
+          height: 60px;
+          object-fit: contain;
+        }
+        
+        .headerContent {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          flex: 1;
+        }
+        
         .header :global(svg) { /* İkon gibi alt bileşenleri seçmek için :global() gerekir */
           color: #3b82f6;
         }
